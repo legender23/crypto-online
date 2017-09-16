@@ -1,18 +1,182 @@
-<html>
+<!DOCTYPE html>
     <head>
+        <meta name="description" content="encrypt and decrypt online">
+        <meta name="keywords" content="在线加密/解密 encrypt and decrypt online">
+        <meta name="author" content="Jupiter23">
+        <meta charset="UTF-8">
+        <title>Encrypt and Decrypt Online</title>
+        <script src="static/jquery.min.js"></script>
+        <script src="static/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
+        <link rel="stylesheet" tpye="text/css" href="http://apps.bdimg.com/libs/bootstrap-glyphicons/1.0/css/bootstrap-glyphicons.css">
         <script src="CryptoJS/components/core-min.js"></script>
-        <script src="CryptoJS/rollups/md5.js"></script>
     </head>
-    <body>
-        <input id="test" type="text">Please input a string:
-        <input type="submit" onclick=console_sth()>
-    </body>
-    <script>
-        function console_sth() {
-            let str = document.getElementById("test").value;
-            console.log(str);
-            console.log(CryptoJS.MD5(str).toString());
+    <style>
+        p {
+            font-size: 20px;
+        }
+        div.button-component {
+            position: relative;
+            bottom: 0;
         }
         
-    </script>
+    </style>
+    <body>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <nav class="navbar navbar-inverse" role="navigation">
+                            <div class="navbar-header" style="text-align: center">
+                                <b class="navbar-brand"  style="color: white;position: absolute;left: 40%;top: 5%">密码学中常用加解密方式</b>
+                            </div>
+                    </nav>
+                </div>
+            </div>
+            <div id="en-decrypto" class="row">
+                <div class="col-md-12 column">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a id="panel-classical" href="#crypto-classical" data-toggle="tab">古典加密/解密</a>
+                            </li>
+                            <li>
+                                <a id="panel-one-way" href="#crypto-one-way" data-toggle="tab">单向加密（哈希/散列）</a>
+                            </li>
+                            <li>
+                                <a id="panel-modern" href="#crypto-modern" data-toggle="tab">现代加密/解密</a>
+                            </li>
+                            <li>
+                                <a id="panel-common" href="#common-coding" data-toggle="tab">常用编码/解码</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="crypto-classical">
+                                <div class="row">
+                                    <br>
+                                    <div id="panel_left" class="col-md-5 col-lg-5 col-sm-5">
+                                        <p><span class="label label-default" contenteditable="true">明文</span></p>
+                                        <textarea name="plaintext" id="plaintext"></textarea>
+                                    </div>
+                                    <div id="panel_center" class="col-md-2 col-lg-2 col-sm-2">
+                                        <p><span class="label label-info" contenteditable="true">选择加密算法</span></p>        
+                                        <select name="crypto_way" id="crypto_way">
+                                            <option value="choose_a_way"> --- </option>
+                                        </select>
+                                        <br><br><br><br>
+                                        <div id="key_choose">
+                                            <p><span class="label label-info" contenteditable="true">输入密钥</span></p>
+                                            <input class="key_input" type="text">
+                                        </div>
+                                        <br><br><br><br><br>
+                                        <div class="button-component" style="text-align: center">
+                                            <button class="btn btn-danger" type="button">加密 <span class="glyphicon glyphicon-arrow-right"></span></button>
+                                            <br><br>
+                                            <button class="btn btn-primary" type="button">解密 <span class="glyphicon glyphicon-arrow-left"></span></button>
+                                        </div>
+                                    </div>
+                                    <div id="panel_right" class="col-md-5 col-lg-5 col-sm-5">
+                                        <p><span class="label label-default " contenteditable="true">密文</span></p>
+                                        <textarea name="ciphertext" id="ciphertext"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="crypto-one-way">
+                                <div class="row">
+                                    <br>
+                                    <div class="col-md-5 col-lg-5 col-sm-5">
+                                        <p><span class="label label-default" contenteditable="true">明文</span></p>
+                                        <textarea name="plaintext" id="plaintext"></textarea>
+                                    </div>
+                                    <div class="col-md-2 col-lg-2 col-sm-2">
+                                        <p><span class="label label-info" contenteditable="true">选择加密算法</span></p>   
+                                        <select name="crypto_way" id="crypto_way">
+                                            <option value="choose_a_way"> --- </option>
+                                        </select>
+                                        <br><br><br><br>
+                                        <div id="key_choose">
+                                            <p><span class="label label-info" contenteditable="true">输入密钥</span></p>
+                                            <input class="key_input" type="text">
+                                        </div>
+                                        <br><br><br><br><br>
+                                        <div class="button-component" style="text-align: center">
+                                            <button class="btn btn-danger" type="button">加密 <span class="glyphicon glyphicon-arrow-right"></span></button>
+                                            <br><br>
+                                            <button class="btn btn-primary" type="button">解密 <span class="glyphicon glyphicon-arrow-left"></span></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-lg-5 col-sm-5">
+                                        <p><span id="handled-text" class="label label-default" contenteditable="true">密文</span></p>
+                                        <textarea name="ciphertext" id="ciphertext"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="crypto-modern">
+                                <div class="row">
+                                    <br>
+                                    <div class="col-md-5 col-lg-5 col-sm-5">
+                                        <p><span class="label label-default" contenteditable="true">明文</span></p>
+                                        <textarea name="plaintext" id="plaintext"></textarea>
+                                    </div>
+                                    <div class="col-md-2 col-lg-2 col-sm-2">
+                                        <p><span class="label label-info" contenteditable="true">选择加密算法</span></p>
+                                        
+                                        <select name="crypto_way" id="crypto_way">
+                                            <option value="choose_a_way"> --- </option>
+                                        </select>
+                                        <br><br><br><br>
+                                        <div id="key_choose">
+                                            <p><span class="label label-info" contenteditable="true">输入密钥</span></p>
+                                            <input class="key_input" type="text">
+                                        </div>
+                                        <br><br><br><br><br>
+                                        <div class="button-component" style="text-align: center">
+                                            <button class="btn btn-danger" type="button">加密 <span class="glyphicon glyphicon-arrow-right"></span></button>
+                                            <br><br>
+                                            <button class="btn btn-primary" type="button">解密 <span class="glyphicon glyphicon-arrow-left"></span></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-lg-5 col-sm-5">
+                                        <p><span id="handled-text" class="label label-default" contenteditable="true">密文</span></p>
+                                        <textarea name="ciphertext" id="ciphertext"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="common-coding">
+                                <div class="row">
+                                    <br>
+                                    <div class="col-md-5 col-lg-5 col-sm-5">
+                                        <p><span class="label label-default" contenteditable="true">编码前</span></p>
+                                        <textarea name="plaintext" id="plaintext"></textarea>
+                                    </div>
+                                    <div class="col-md-2 col-lg-2 col-sm-2">
+                                        <p><span class="label label-info" contenteditable="true">选择编码方式</span></p>   
+                                        <select name="crypto_way" id="crypto_way">
+                                            <option value="choose_a_way"> --- </option>
+                                        </select>
+                                        <br><br><br><br>
+                                        <div id="key_choose">
+                                            <p><span class="label label-info" contenteditable="true">输入密钥</span></p>
+                                            <input class="key_input" type="text">
+                                        </div>
+                                        <br><br><br><br><br>
+                                        <div class="button-component" style="text-align: center">
+                                            <button class="btn btn-danger" type="button">编码 <span class="glyphicon glyphicon-arrow-right"></span></button>
+                                            <br><br>
+                                            <button class="btn btn-primary" type="button">解码 <span class="glyphicon glyphicon-arrow-left"></span></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-lg-5 col-sm-5">
+                                        <p><span id="handled-text" class="label label-default" contenteditable="true">编码后</span></p>
+                                        <textarea name="ciphertext" id="ciphertext"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="main.js"></script>
 </html>
