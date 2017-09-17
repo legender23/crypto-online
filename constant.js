@@ -7,8 +7,8 @@ const oneWayEnc = [
     'SHA1','SHA224', 'SHA256', 'SHA384', 'SHA512', 'MD5',
     'HmacSHA1', 'HmacSHA224', 'HmacSHA256', 'HmacSHA384', 'HmacSHA512', 'HmacMD5'
 ]
-const commonEnc = [ 'BASE64', 'UTF16' ];
-// , 'format-hex'
+const commonEnc = [ 'BASE64', "HEX" ];
+// , 'format-hex', 'UTF16' 
 const encrypt_call = {
     'Caser': (p, k) => {
         // Caser Encryption code here ...
@@ -75,8 +75,12 @@ const encrypt_call = {
         return CryptoJS.HmacMD5(p, k).toString();
     },
     'BASE64' : (p) => {
-        let wordArray = CryptoJS.enc.Utf8.parse(p);
-        return CryptoJS.enc.Base64.stringify(wordArray);
+        let c = CryptoJS.enc.Utf8.parse(p);
+        return CryptoJS.enc.Base64.stringify(c);
+    },
+    'HEX' : (p) => {
+        let c= CryptoJS.enc.Utf8.parse(p);
+        return CryptoJS.enc.Hex.stringify(c);
     }
 }
 
@@ -107,6 +111,14 @@ const decrypt_call = {
     },
     'DES' : (c, k) => {
         return CryptoJS.DES.decrypt(c, k).toString(CryptoJS.enc.Utf8);
+    },
+    'BASE64' : (c) => {
+        let p = CryptoJS.enc.Base64.parse(c);
+        return p.toString(CryptoJS.enc.Utf8);
+    },
+    'HEX' : (c) => {
+        let p = CryptoJS.enc.Hex.parse(c);
+        return p.toString(CryptoJS.enc.Utf8);
     }
 }
 

@@ -150,7 +150,7 @@ $(document).ready(function(){
                 scripts_call(modern_way.value, modern_p, modern_key.value, modern_c.value, 'modern-dec', 'dec');
                 break;
             case 'common-dec':
-                scripts_all(common_way.value, common_p, null, common_c.value, 'common-dec', 'dec');
+                scripts_call(common_way.value, common_p, null, common_c.value, 'common-dec', 'dec');
                 break;
         }
     }
