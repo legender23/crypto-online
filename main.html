@@ -10,12 +10,19 @@
         <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
         <link rel="stylesheet" tpye="text/css" href="http://apps.bdimg.com/libs/bootstrap-glyphicons/1.0/css/bootstrap-glyphicons.css">
         <script src="CryptoJS/components/core-min.js"></script>
+        <script src="constant.js"></script>
     </head>
     <style>
         p {
             font-size: 20px;
         }
-        
+        div.key_choose_hide {
+            opacity: 0;
+        }
+        div.key_choose_show {
+            opacity: 100%;
+        }
+
     </style>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -60,7 +67,7 @@
                                         <textarea name="plaintext" id="plaintext"></textarea>
                                     </div>
                                     <div id="panel_center" class="col-md-2 col-lg-2 col-sm-2">
-                                        <p><span class="label label-info" contenteditable="true">选择加密算法</span></p>        
+                                        <p><span class="label label-info" contenteditable="true">选择加密算法</span></p>
                                         <select name="crypto_way" id="crypto_way_classical">
                                             <option value="---"> --- </option>
                                         </select>
@@ -95,7 +102,7 @@
                                             <option value="---"> --- </option>
                                         </select>
                                         <br><br><br><br>
-                                        <div class="key_choose">
+                                        <div class="key_choose key_choose_hide">
                                             <p><span class="label label-info" contenteditable="true">输入密钥</span></p>
                                             <input type="text">
                                         </div>
@@ -156,7 +163,7 @@
                                             <option value="---"> --- </option>
                                         </select>
                                         <br><br><br><br>
-                                        <div class="key_choose">
+                                        <div class="key_choose key_choose_hide">
                                             <p><span class="label label-info" contenteditable="true">输入密钥</span></p>
                                             <input type="text">
                                         </div>
@@ -186,5 +193,6 @@
             </nav>
         </div>
     </body>
+    
     <script src="main.js"></script>
 </html>
