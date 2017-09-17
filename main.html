@@ -62,18 +62,18 @@
                                     <div id="panel_center" class="col-md-2 col-lg-2 col-sm-2">
                                         <p><span class="label label-info" contenteditable="true">选择加密算法</span></p>        
                                         <select name="crypto_way" id="crypto_way_classical">
-                                            <option value="choose_a_way"> --- </option>
+                                            <option value="---"> --- </option>
                                         </select>
                                         <br><br><br><br>
-                                        <div id="key_choose">
+                                        <div class="key_choose">
                                             <p><span class="label label-info" contenteditable="true">输入密钥</span></p>
                                             <input class="key_input" type="text">
                                         </div>
                                         <br><br><br><br><br>
                                         <div class="button-component" style="text-align: center">
-                                            <button class="btn btn-danger" type="button">加密 <span class="glyphicon glyphicon-arrow-right"></span></button>
+                                            <button id="classical-enc" class="btn btn-danger enc" type="button">加密 <span class="glyphicon glyphicon-arrow-right"></span></button>
                                             <br><br>
-                                            <button class="btn btn-primary" type="button">解密 <span class="glyphicon glyphicon-arrow-left"></span></button>
+                                            <button id="classical-dec" class="btn btn-primary dec" type="button">解密 <span class="glyphicon glyphicon-arrow-left"></span></button>
                                         </div>
                                     </div>
                                     <div id="panel_right" class="col-md-5 col-lg-5 col-sm-5">
@@ -92,18 +92,18 @@
                                     <div class="col-md-2 col-lg-2 col-sm-2">
                                         <p><span class="label label-info" contenteditable="true">选择加密算法</span></p>   
                                         <select name="crypto_way" id="crypto_way_one_way">
-                                            <option value="choose_a_way"> --- </option>
+                                            <option value="---"> --- </option>
                                         </select>
                                         <br><br><br><br>
-                                        <div id="key_choose">
+                                        <div class="key_choose">
                                             <p><span class="label label-info" contenteditable="true">输入密钥</span></p>
-                                            <input class="key_input" type="text">
+                                            <input type="text">
                                         </div>
                                         <br><br><br><br><br>
                                         <div class="button-component" style="text-align: center">
-                                            <button class="btn btn-danger" type="button">加密 <span class="glyphicon glyphicon-arrow-right"></span></button>
+                                            <button id="one-way-enc" class="btn btn-danger enc" type="button">加密 <span class="glyphicon glyphicon-arrow-right"></span></button>
                                             <br><br>
-                                            <button class="btn btn-primary" type="button">解密 <span class="glyphicon glyphicon-arrow-left"></span></button>
+                                            <button id="one-way-dec" class="btn btn-primary dec" type="button">解密 <span class="glyphicon glyphicon-arrow-left"></span></button>
                                         </div>
                                     </div>
                                     <div class="col-md-5 col-lg-5 col-sm-5">
@@ -123,18 +123,18 @@
                                         <p><span class="label label-info" contenteditable="true">选择加密算法</span></p>
                                         
                                         <select name="crypto_way" id="crypto_way_modern">
-                                            <option value="choose_a_way"> --- </option>
+                                            <option value="---"> --- </option>
                                         </select>
                                         <br><br><br><br>
-                                        <div id="key_choose">
+                                        <div class="key_choose">
                                             <p><span class="label label-info" contenteditable="true">输入密钥</span></p>
                                             <input class="key_input" type="text">
                                         </div>
                                         <br><br><br><br><br>
                                         <div class="button-component" style="text-align: center">
-                                            <button class="btn btn-danger" type="button">加密 <span class="glyphicon glyphicon-arrow-right"></span></button>
+                                            <button id="modern-enc" class="btn btn-danger enc" type="button">加密 <span class="glyphicon glyphicon-arrow-right"></span></button>
                                             <br><br>
-                                            <button class="btn btn-primary" type="button">解密 <span class="glyphicon glyphicon-arrow-left"></span></button>
+                                            <button id="modern-dec" class="btn btn-primary dec" type="button">解密 <span class="glyphicon glyphicon-arrow-left"></span></button>
                                         </div>
                                     </div>
                                     <div class="col-md-5 col-lg-5 col-sm-5">
@@ -153,18 +153,18 @@
                                     <div class="col-md-2 col-lg-2 col-sm-2">
                                         <p><span class="label label-info" contenteditable="true">选择编码方式</span></p>   
                                         <select name="crypto_way" id="crypto_way_common">
-                                            <option value="choose_a_way"> --- </option>
+                                            <option value="---"> --- </option>
                                         </select>
                                         <br><br><br><br>
-                                        <div id="key_choose">
+                                        <div class="key_choose">
                                             <p><span class="label label-info" contenteditable="true">输入密钥</span></p>
-                                            <input class="key_input" type="text">
+                                            <input type="text">
                                         </div>
                                         <br><br><br><br><br>
                                         <div class="button-component" style="text-align: center">
-                                            <button class="btn btn-danger" type="button">编码 <span class="glyphicon glyphicon-arrow-right"></span></button>
+                                            <button id="common-enc" class="btn btn-danger enc" type="button">编码 <span class="glyphicon glyphicon-arrow-right"></span></button>
                                             <br><br>
-                                            <button class="btn btn-primary" type="button">解码 <span class="glyphicon glyphicon-arrow-left"></span></button>
+                                            <button id="common-dec" class="btn btn-primary dec" type="button">解码 <span class="glyphicon glyphicon-arrow-left"></span></button>
                                         </div>
                                     </div>
                                     <div class="col-md-5 col-lg-5 col-sm-5">
