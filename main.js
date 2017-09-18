@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    
+
     class Init {
         constructor() {
             this.crypto_init();
@@ -15,7 +15,18 @@ $(document).ready(function(){
                 this.classical_select_bind($('#crypto_way_classical').val());
             });
             this.panel_click_bind();
-            this.options_load('panel-classical');
+            
+            (function() {
+                let id = document.getElementById('crypto_way_classical');
+                
+                for ( let val of classicalEnc ) {
+                    let option = document.createElement("option");
+                    option.setAttribute("value", `${val}`);
+                    option.innerText = `${val}`;
+                    id.appendChild(option);
+                }
+                
+            })();
         }
 
         panel_style_init(id, style) {
@@ -27,20 +38,36 @@ $(document).ready(function(){
 
         classical_select_bind(type) {
             switch(type) {
-                case 'Caser':
-                    $('div.key_choose')[0].innerHTML =
-                        `<p><span class="label label-info" contenteditable="true">移位个数</span></p>
-                        <input id="offset" type="text">
-                        <br><br>
-                        <p><span class="label label-info" contenteditable="true">模数</span></p>
-                        <input id="mod_bit" type="text">`;
+                case 'Caser-mod26':
+                    $('#info_change')[0].innerText = "偏移位置";
+                    if ( document.getElementById('caser_bruteforce') == null ) {
+                        $('div.button-component').prepend(
+                            `<button id="caser_bruteforce" class="btn btn-warning" type="button"> 暴力破解 <span class="glyphicon glyphicon-arrow-left"></span></button>
+                            <br><br>`
+                        );
+                        $('#caser_bruteforce').click(() => {
+                            c_check('caser_bruteforce', 26);
+                        });
+                    }
+                    break;
+                case 'Caser-mod95':
+                    $('#info_change')[0].innerText = "偏移位置";
+                    if ( document.getElementById('caser_bruteforce') == null ) {
+                        $('div.button-component').prepend(
+                            `<button id="caser_bruteforce" class="btn btn-warning" type="button"> 暴力破解 <span class="glyphicon glyphicon-arrow-left"></span></button>
+                            <br><br>`
+                        );
+                        $('#caser_bruteforce').click(() => {
+                            c_check('caser_bruteforce', 95);
+                        });
+                    }
                     break;
             }
         }
 
         panel_click_bind() {
             
-            [ 'panel-classical', 'panel-one-way', 'panel-modern', 'panel-common' ].map(
+            [ 'panel-one-way', 'panel-modern', 'panel-common' ].map(
                 (x) => {
                     let id = x;
                     document.getElementById(id).addEventListener("click", () => {
@@ -67,6 +94,7 @@ $(document).ready(function(){
                     body.appendChild(script);
                     item.appendChild(option);
                 }
+    
                 if ( id === 'crypto_way_modern' ) {
                     let option = document.createElement("option");
                     option.setAttribute("value", "DES");
@@ -86,9 +114,6 @@ $(document).ready(function(){
         options_load(type) {
             let [ key_classical, key_one_way, key_modern, key_common ] = [ ...document.querySelectorAll('div.key_choose') ];
             switch (type) {
-                case 'panel-classical':
-                    this.options_padding('crypto_way_classical', classicalEnc, classicalCryptoPath);
-                    break;
                 case 'panel-one-way':
                     this.options_padding('crypto_way_one_way', oneWayEnc, oneWayCryptoPath);
                     break;
@@ -132,6 +157,19 @@ $(document).ready(function(){
             }
         });
     })();
+
+    function c_check(id, mod_bit) {
+        let [ way, c ] = [ $('#crypto_way_classical').val(), $('#ciphertext').val() ];
+        if ( way !== "---" && c != "" ) {
+            switch(id) {
+                case 'caser_bruteforce':
+                    $('#plaintext').val( Caser.bruteForce( c, Number(mod_bit) ) );
+                    break;
+            }
+        }else {
+            alert("请检查数据是否输入完全");
+        }
+    }
 
     function enc_exec(type) {
         let [ classical_p, one_way_p, modern_p, common_p ] = [ ...document.querySelectorAll('#plaintext') ];

@@ -1,5 +1,5 @@
-const [ classicalCryptoPath, oneWayCryptoPath, modernCryptoPath, commonCodePath ] = [ "./classicalCrypto/", "./CryptoJS/rollups/", "./CryptoJS/rollups/", "./CryptoJS/components/" ];
-const classicalEnc = [ 'Caser', 'Vigenere', 'Fence', 'Affine',  ];
+const [ oneWayCryptoPath, modernCryptoPath, commonCodePath ] = [ "./CryptoJS/rollups/", "./CryptoJS/rollups/", "./CryptoJS/components/" ];
+const classicalEnc = [ 'Caser-mod26', 'Caser-mod95', 'Vigenere-XOR', 'Vigenere-mod26', 'Fence', 'Affine',  ];
 const modernEnc = [ 'Rabbit', 'RC4', 'AES', 'TripleDes' ];
 // 'ripemd160', 'mode-cfb', 'mode-ecb',  'mode-ofb', 'mode-ctr', 'evpkdf'
 //  'pbkdf2',
@@ -10,8 +10,11 @@ const oneWayEnc = [
 const commonEnc = [ 'BASE64' ];
 // , 'format-hex', 'UTF16' 
 const encrypt_call = {
-    'Caser' : ( p, offset, mod_bit ) => {
-        return Caser.Enc( p, offset, mod_bit );
+    'Caser-mod26' : ( p, offset, mod_bit ) => {
+        return Caser.Enc( p, offset, 26 );
+    },
+    'Caser-mod95' : ( p, offset, mod_bit ) => {
+        return Caser.Enc( p, offset, 95 );
     },
     'Vigenere' : (p, k) => {
         // Vigenere Encryption code here ...
@@ -85,8 +88,11 @@ const encrypt_call = {
 }
 
 const decrypt_call = {
-    'Caser' : ( c, offset, mod_bit ) => {
-        return Caser.Dec( c, Number(mod_bit), Number(offset) );
+    'Caser-mod26' : ( c, offset, mod_bit ) => {
+        return Caser.Dec( c, offset, 26 );
+    },
+    'Caser-mod95' : ( c, offset, mod_bit ) => {
+        return Caser.Enc( c, offset, 95 );
     },
     'Vigenere' : (p, k) => {
         // Vigenere Encryption code here ...
@@ -131,11 +137,9 @@ function scripts_call(way, plaintext, key, ciphertext, type, enc_dec) {
                         if (key !== "") {
                             ciphertext.value = encrypt_call[way](plaintext, key);
                         }else {
-                            let [ offset, mod_bit ] = [ Number($('#offset').val()), Number($('#mod_bit').val()) ];
-                            if ( offset > 0 && mod_bit > 0 ) {
-                                console.log(plaintext, offset, mod_bit);
-                                console.log(encrypt_call[way]);
-                                ciphertext.value = encrypt_call[way][ plaintext, offset, mod_bit ];
+                            let offset = Number($('input.key_input')[0].value);
+                            if ( offset > 0 ) {
+                                ciphertext.value = encrypt_call[way]( plaintext, offset );
                                 break;
                             }else {
                                 alert("请检查输入的数据");
@@ -197,10 +201,18 @@ function scripts_call(way, plaintext, key, ciphertext, type, enc_dec) {
                         if (key !== "") {
                             plaintext.value = decrypt_call[way](ciphertext, key);
                         }else {
+                            let offset = Number($('input.key_input')[0].value);
+                            if ( offset > 0 ) {
+                                plaintext.value = decrypt_call[way]( ciphertext, offset );
+                                break;
+                            }else {
+                                alert("请检查输入的数据");
+                                break;
+                            }
                             alert("请输入密钥信息");
                         }
                     }else {
-                        alert("请输入明文信息");
+                        alert("请输入密文信息");
                     }
                 }else {
                     alert("请选择加密方式");
