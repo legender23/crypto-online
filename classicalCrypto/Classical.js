@@ -59,8 +59,24 @@ const Caser = {
 }
 
 const Vigenere = {
-    text : (  ) => {
-        
+    text : ( text_raw ) => {
+        if ( text_raw.startsWith('0x') ) {
+            let text_hex = text_raw.split("0x").shift();
+            return text_hex.map( (x) => {
+                String.fromCharCode( parseInt( x, 16 ) );
+            }).join("");
+        }else {
+            if ( text_raw.startsWith('\\x') ) {
+                let text_hex = text_raw.split("\\x").join("");
+                return text_hex.map( (x) => {
+                    String.fromCharCode( parseInt( x, 16 ) );
+                }).join("");
+            }
+        }
+        let [ text_hex, len=text_raw.length ] = [ [] ];
+        for ( let i=0; i < len; i+=2 )
+            text_hex.push( String.fromCharCode( parseInt( text_raw.substr(i, 2), 16 ) ) );
+        return text_hex.join("");
     },
     Enc_XOR : ( p, k ) => {
         let [ length, c, mod ] = [ p.length, "", k.length ];
@@ -73,11 +89,9 @@ const Vigenere = {
     },
     //Enc_mod : 
     Dec_XOR : ( c, k ) => {
-        let [ p, mod, c_hex, length=c_hex.length ] = [ "", k.length, CryptoJS.enc.Hex.parse(c).toString(CryptoJS.enc.Utf8) ];
-        // let c_hex = CryptoJS.enc.Hex.parse(c);
-        // c_hex = c_hex.toString(CryptoJS.enc.Utf8);
-        for ( let i=0; i < length; i++ ) {
-            let tmp = c_hex[i].charCodeAt() ^ k[ i % mod ].charCodeAt();
+        let [ p, c_hex, k_hex, mod=k_hex.length, len=c_hex.length ] = [ "", Vigenere.text(c), Vigenere.text(k) ];
+        for ( let i=0; i < len; i++ ) {
+            let tmp = c_hex[i].charCodeAt() ^ k_hex[ i % mod ].charCodeAt();
             p += String.fromCharCode(tmp);
         }
         return p;

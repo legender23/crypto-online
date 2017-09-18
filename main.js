@@ -62,6 +62,32 @@ $(document).ready(function(){
                         });
                     }
                     break;
+                case 'Vigenere-XOR':
+                    // $('#info_change')[0].innerText = "偏移位置";
+                    document.querySelectorAll('input.key_input')[0].setAttribute("placeholder", "格式与密文格式保持一致");
+                    if ( document.getElementById('vige_bruteforce') == null ) {
+                        $('div.button-component').prepend(
+                            `<button id="vige_bruteforce" class="btn btn-warning" type="button"> 暴力破解 <span class="glyphicon glyphicon-arrow-left"></span></button>
+                            <br><br>`
+                        );
+                        // $('#caser_bruteforce').click(() => {
+                        //     c_check('Vigenere-XOR', 26);
+                        // });
+                    }
+                    break;
+                case 'Vigenere-mod':
+                    // $('#info_change')[0].innerText = "偏移位置";
+                    $('input.key_input')[0].attr("placeholder", "输入格式与密文格式说明部分保持一致");
+                    if ( document.getElementById('vige_bruteforce') == null ) {
+                        $('div.button-component').prepend(
+                            `<button id="vige_bruteforce" class="btn btn-warning" type="button"> 暴力破解 <span class="glyphicon glyphicon-arrow-left"></span></button>
+                            <br><br>`
+                        );
+                        // $('#caser_bruteforce').click(() => {
+                        //     c_check('Vigenere-XOR', 26);
+                        // });
+                    }
+                    break;
             }
         }
 
