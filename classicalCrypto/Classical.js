@@ -59,7 +59,29 @@ const Caser = {
 }
 
 const Vigenere = {
-
+    text : (  ) => {
+        
+    },
+    Enc_XOR : ( p, k ) => {
+        let [ length, c, mod ] = [ p.length, "", k.length ];
+        for ( let i=0; i < length; i++ ) {
+            if ( p[i] === " " ) continue;
+            let tmp = p[i].charCodeAt() ^ k[ i % mod ].charCodeAt();
+            c += String.fromCharCode(tmp);
+        }
+        return c;
+    },
+    //Enc_mod : 
+    Dec_XOR : ( c, k ) => {
+        let [ p, mod, c_hex, length=c_hex.length ] = [ "", k.length, CryptoJS.enc.Hex.parse(c).toString(CryptoJS.enc.Utf8) ];
+        // let c_hex = CryptoJS.enc.Hex.parse(c);
+        // c_hex = c_hex.toString(CryptoJS.enc.Utf8);
+        for ( let i=0; i < length; i++ ) {
+            let tmp = c_hex[i].charCodeAt() ^ k[ i % mod ].charCodeAt();
+            p += String.fromCharCode(tmp);
+        }
+        return p;
+    }
 }
 
 const Fence = {

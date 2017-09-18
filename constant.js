@@ -16,8 +16,8 @@ const encrypt_call = {
     'Caser-mod95' : ( p, offset, mod_bit ) => {
         return Caser.Enc( p, offset, 95 );
     },
-    'Vigenere' : (p, k) => {
-        // Vigenere Encryption code here ...
+    'Vigenere-XOR' : (p, k) => {
+        return Vigenere.Enc_XOR(p, k);
     },
     'Fence' : (p, k) => {
         // Fence Encryption code here
@@ -94,8 +94,8 @@ const decrypt_call = {
     'Caser-mod95' : ( c, offset, mod_bit ) => {
         return Caser.Enc( c, offset, 95 );
     },
-    'Vigenere' : (p, k) => {
-        // Vigenere Encryption code here ...
+    'Vigenere-XOR' : (c, k) => {
+        return Vigenere.Dec_XOR( c, k );
     },
     'Fence' : (p, k) => {
         // Fence Encryption code here
@@ -233,7 +233,7 @@ function scripts_call(way, plaintext, key, ciphertext, type, enc_dec) {
                 if (way !== '---') {
                     if (plaintext !== "") {
                         if (key !== "") {
-                            plaintext.value = decrypt_call[way](ciphertext, key);
+                            plaintext.value = decrypt_call[way](CryptoJS.enc.Utf8.parse(ciphertext), key);
                         }else {
                             alert("请输入密钥信息");
                         }
