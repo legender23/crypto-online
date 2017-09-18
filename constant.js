@@ -7,11 +7,11 @@ const oneWayEnc = [
     'SHA1','SHA224', 'SHA256', 'SHA384', 'SHA512', 'MD5',
     'HmacSHA1', 'HmacSHA224', 'HmacSHA256', 'HmacSHA384', 'HmacSHA512', 'HmacMD5'
 ]
-const commonEnc = [ 'BASE64', "HEX" ];
+const commonEnc = [ 'BASE64' ];
 // , 'format-hex', 'UTF16' 
 const encrypt_call = {
-    'Caser': (p, k) => {
-        // Caser Encryption code here ...
+    'Caser' : ( p, offset, mod_bit ) => {
+        return Caser.Enc( p, offset, mod_bit );
     },
     'Vigenere' : (p, k) => {
         // Vigenere Encryption code here ...
@@ -85,8 +85,8 @@ const encrypt_call = {
 }
 
 const decrypt_call = {
-    'Caser': (p, k) => {
-        // Caser Encryption code here ...
+    'Caser' : ( c, offset, mod_bit ) => {
+        return Caser.Dec( c, Number(mod_bit), Number(offset) );
     },
     'Vigenere' : (p, k) => {
         // Vigenere Encryption code here ...
@@ -131,6 +131,16 @@ function scripts_call(way, plaintext, key, ciphertext, type, enc_dec) {
                         if (key !== "") {
                             ciphertext.value = encrypt_call[way](plaintext, key);
                         }else {
+                            let [ offset, mod_bit ] = [ Number($('#offset').val()), Number($('#mod_bit').val()) ];
+                            if ( offset > 0 && mod_bit > 0 ) {
+                                console.log(plaintext, offset, mod_bit);
+                                console.log(encrypt_call[way]);
+                                ciphertext.value = encrypt_call[way][ plaintext, offset, mod_bit ];
+                                break;
+                            }else {
+                                alert("请检查输入的数据");
+                                break;
+                            }
                             alert("请输入密钥信息");
                         }
                     }else {

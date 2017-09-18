@@ -10,7 +10,10 @@ $(document).ready(function(){
     
             [ '#plaintext', '#ciphertext' ].map( (id) => this.panel_style_init(id, [ width, height ]) );
             [ '#crypto_way_classical', '#crypto_way_one_way', '#crypto_way_modern', '#crypto_way_common' ].map( (id) => this.panel_style_init(id, [ centerWidth ]));
-    
+            
+            document.getElementById('crypto_way_classical').addEventListener("click", () => {
+                this.classical_select_bind($('#crypto_way_classical').val());
+            });
             this.panel_click_bind();
             this.options_load('panel-classical');
         }
@@ -19,6 +22,19 @@ $(document).ready(function(){
             for (let val of [ ...document.querySelectorAll(`${id}`) ]) {
                 val.style.width = style[0];
                 val.style.height = style[1];
+            }
+        }
+
+        classical_select_bind(type) {
+            switch(type) {
+                case 'Caser':
+                    $('div.key_choose')[0].innerHTML =
+                        `<p><span class="label label-info" contenteditable="true">移位个数</span></p>
+                        <input id="offset" type="text">
+                        <br><br>
+                        <p><span class="label label-info" contenteditable="true">模数</span></p>
+                        <input id="mod_bit" type="text">`;
+                    break;
             }
         }
 
@@ -57,6 +73,12 @@ $(document).ready(function(){
                     option.innerText = "DES";
                     item.appendChild(option);
                 }
+                if ( id === 'crypto_way_common' ) {
+                    let option = document.createElement("option");
+                    option.setAttribute("value", "HEX");
+                    option.innerText = "HEX";
+                    item.appendChild(option);
+                }
             }
             
         }
@@ -81,9 +103,6 @@ $(document).ready(function(){
     }
 
     (function() {
-
-        // let [ classical_enc, one_way_enc, modern_enc, common_enc ] = [ ...document.querySelectorAll('button.enc') ];
-        // let [ classical_dec, one_way_dec, modern_dec, common_dec ] = [ ...document.querySelectorAll('button.dec') ];
         
         let [ classical_c, one_way_c, modern_c, common_c ] = [ ...document.querySelectorAll('#ciphertext') ];
         let [ classical_key, modern_key ] = [ ...document.querySelectorAll('input.key_input') ];
