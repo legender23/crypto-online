@@ -59,7 +59,7 @@ const Caser = {
 }
 
 const Vigenere = {
-    text : ( text_raw ) => {
+    hex_decode : ( text_raw ) => {
         if ( text_raw.startsWith('0x') ) {
             let text_hex = text_raw.split("0x").shift();
             return text_hex.map( (x) => {
@@ -78,18 +78,29 @@ const Vigenere = {
             text_hex.push( String.fromCharCode( parseInt( text_raw.substr(i, 2), 16 ) ) );
         return text_hex.join("");
     },
+    // generate a vigenere table
+    mod_table : () => {
+        let [ table, str, len=str.length ] = [ {}, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' ];
+        for ( let i=0; i < len; i++ ) {
+            table[t[i]] = t.substring(i, 26).padEnd(26, t.substr(0, i));
+        }
+        return table;
+    },
     Enc_XOR : ( p, k ) => {
-        let [ length, c, mod ] = [ p.length, "", k.length ];
-        for ( let i=0; i < length; i++ ) {
-            if ( p[i] === " " ) continue;
-            let tmp = p[i].charCodeAt() ^ k[ i % mod ].charCodeAt();
+        let [ len, c, k_hex, mod=k_hex.length ] = [ p.length, "", Vigenere.hex_decode(k) ];
+        for ( let i=0; i < len; i++ ) {
+            let tmp = p[i].charCodeAt() ^ k_hex[ i % mod ].charCodeAt();
             c += String.fromCharCode(tmp);
         }
         return c;
     },
-    //Enc_mod : 
+    Enc_mod : (p, offset) => {
+        let mod_table = Vigenere.mod_table();
+        
+
+    }
     Dec_XOR : ( c, k ) => {
-        let [ p, c_hex, k_hex, mod=k_hex.length, len=c_hex.length ] = [ "", Vigenere.text(c), Vigenere.text(k) ];
+        let [ p, c_hex, k_hex, mod=k_hex.length, len=c_hex.length ] = [ "", Vigenere.hex_decode(c), Vigenere.hex_decode(k) ];
         for ( let i=0; i < len; i++ ) {
             let tmp = c_hex[i].charCodeAt() ^ k_hex[ i % mod ].charCodeAt();
             p += String.fromCharCode(tmp);
@@ -104,4 +115,19 @@ const Fence = {
 
 const Affine = {
     
+}
+
+const Hex = {
+    Enc : (p) => {
+        let [ p_hex, len=p.length ] = [ [] ];
+        for ( let i=0; i < len; i++ )
+            p_hex.push( p[i].charCodeAt().toString(16) );
+        return p_hex.join("");
+    },
+    Dec : (c) => {
+        let [ c_raw, len=c.length ] = [ [] ];
+        for ( let i=0; i < len; i+=2 )
+            c_raw.push( String.fromCharCode( parseInt( c.substr(i, 2), 16 ) ) );
+        return c_raw.join("");
+    }
 }

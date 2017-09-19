@@ -41,7 +41,7 @@ $(document).ready(function(){
                 case 'Caser-mod26':
                     $('#info_change')[0].innerText = "偏移位置";
                     if ( document.getElementById('caser_bruteforce') == null ) {
-                        $('div.button-component').prepend(
+                        $('div#panel_center>div.button-component').prepend(
                             `<button id="caser_bruteforce" class="btn btn-warning" type="button"> 暴力破解 <span class="glyphicon glyphicon-arrow-left"></span></button>
                             <br><br>`
                         );
@@ -53,7 +53,7 @@ $(document).ready(function(){
                 case 'Caser-mod95':
                     $('#info_change')[0].innerText = "偏移位置";
                     if ( document.getElementById('caser_bruteforce') == null ) {
-                        $('div.button-component').prepend(
+                        $('div#panel_center>div.button-component').prepend(
                             `<button id="caser_bruteforce" class="btn btn-warning" type="button"> 暴力破解 <span class="glyphicon glyphicon-arrow-left"></span></button>
                             <br><br>`
                         );
@@ -66,7 +66,7 @@ $(document).ready(function(){
                     // $('#info_change')[0].innerText = "偏移位置";
                     document.querySelectorAll('input.key_input')[0].setAttribute("placeholder", "格式与密文格式保持一致");
                     if ( document.getElementById('vige_bruteforce') == null ) {
-                        $('div.button-component').prepend(
+                        $('div#panel_center>div.button-component').prepend(
                             `<button id="vige_bruteforce" class="btn btn-warning" type="button"> 暴力破解 <span class="glyphicon glyphicon-arrow-left"></span></button>
                             <br><br>`
                         );
@@ -75,15 +75,15 @@ $(document).ready(function(){
                         // });
                     }
                     break;
-                case 'Vigenere-mod':
-                    // $('#info_change')[0].innerText = "偏移位置";
+                case 'Vigenere-mod26':
+                    $('#info_change')[0].innerText = "偏移位置";
                     $('input.key_input')[0].attr("placeholder", "输入格式与密文格式说明部分保持一致");
                     if ( document.getElementById('vige_bruteforce') == null ) {
-                        $('div.button-component').prepend(
+                        $('div#panel_center>div.button-component').prepend(
                             `<button id="vige_bruteforce" class="btn btn-warning" type="button"> 暴力破解 <span class="glyphicon glyphicon-arrow-left"></span></button>
                             <br><br>`
                         );
-                        // $('#caser_bruteforce').click(() => {
+                        // $('#vige_bruteforce').click(() => {
                         //     c_check('Vigenere-XOR', 26);
                         // });
                     }
@@ -184,13 +184,16 @@ $(document).ready(function(){
         });
     })();
 
-    function c_check(id, mod_bit) {
+    function c_check(id, tmp) {
         let [ way, c ] = [ $('#crypto_way_classical').val(), $('#ciphertext').val() ];
         if ( way !== "---" && c != "" ) {
             switch(id) {
                 case 'caser_bruteforce':
-                    $('#plaintext').val( Caser.bruteForce( c, Number(mod_bit) ) );
+                    // we can regard the variable named tmp as mod_bit in caser.
+                    $('#plaintext').val( Caser.bruteForce( c, Number(tmp) ) );
                     break;
+                case 'vige_bruteforce':
+                    // 暴力破解按钮的特殊调整
             }
         }else {
             alert("请检查数据是否输入完全");

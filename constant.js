@@ -19,6 +19,9 @@ const encrypt_call = {
     'Vigenere-XOR' : (p, k) => {
         return Vigenere.Enc_XOR(p, k);
     },
+    'Vigenere-mod26' : (p, offset) => {
+        return Vigenere.Enc_mod(p, offset);
+    },
     'Fence' : (p, k) => {
         // Fence Encryption code here
     },
@@ -82,8 +85,9 @@ const encrypt_call = {
         return CryptoJS.enc.Base64.stringify(c);
     },
     'HEX' : (p) => {
-        let c= CryptoJS.enc.Utf8.parse(p);
-        return CryptoJS.enc.Hex.stringify(c);
+        // let c= CryptoJS.enc.Utf8.parse(p);
+        // return CryptoJS.enc.Hex.stringify(c);
+        return Hex.Enc(p);
     }
 }
 
@@ -123,8 +127,9 @@ const decrypt_call = {
         return p.toString(CryptoJS.enc.Utf8);
     },
     'HEX' : (c) => {
-        let p = CryptoJS.enc.Hex.parse(c);
-        return p.toString(CryptoJS.enc.Utf8);
+        // let p = CryptoJS.enc.Hex.parse(c);
+        // return p.toString(CryptoJS.enc.Utf8);
+        return Hex.Dec(c);
     }
 }
 
