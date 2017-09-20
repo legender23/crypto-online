@@ -107,22 +107,39 @@ const Vigenere = {
             if ( tmp && ( tmp.charCodeAt() < 65 || tmp.charCodeAt() > 90 ) )
                 return null;
             
-            c += mod_table[ key[ key_offset % k_len ] ][ text.indexOf( tmp ) ];
-            key_offset ++;
+            c += mod_table[ key[ key_offset++ % k_len ] ][ text.indexOf( tmp ) ];
         }
-        console.log(c);
         return c;
     },
     Dec_mod : ( c, k ) => {
         let [ [ text, mod_table ], p, c_upper, c_len=c_upper.length ] = [ Vigenere.mod_table(), "", c.toUpperCase() ];
         let [ key_offset, key, k_len=key.length ] =  [ 0, k.toUpperCase().split(" ").join("") ];
 
+        for ( let i=0; i < c_len; i++ ) {
+            let tmp = c_upper[i];
+            if ( tmp == " " ) {
+                p += " ";
+                continue;
+            }
+            if ( tmp && ( tmp.charCodeAt() < 65 || tmp.charCodeAt() > 90 ) )
+                return null;
+            
+            p += text[ mod_table[ key[ key_offset++ % k_len ] ].indexOf( tmp ) ];
+        }
+        return p;
     },
     Dec_XOR : ( c, k ) => {
         let [ p, c_hex, k_hex, mod=k_hex.length, len=c_hex.length ] = [ "", Vigenere.hex_decode(c), Vigenere.hex_decode(k) ];
         for ( let i=0; i < len; i++ ) {
             let tmp = c_hex[i].charCodeAt() ^ k_hex[ i % mod ].charCodeAt();
             p += String.fromCharCode(tmp);
+        }
+        return p;
+    },
+    bruteForce : ( c, key_len ) => {
+        p = "";
+        for ( i=0;i<256;i++ ) {
+            p += Vigenere.Dec_XOR( c, (i).toString(16).padStart(0, 2) )+"   i="+i+"\n";
         }
         return p;
     }
@@ -140,7 +157,7 @@ const Hex = {
     Enc : (p) => {
         let [ p_hex, len=p.length ] = [ [] ];
         for ( let i=0; i < len; i++ )
-            p_hex.push( p[i].charCodeAt().toString(16) );
+            p_hex.push( p[i].charCodeAt().toString(16).padStart(2, 0) );
         return p_hex.join("");
     },
     Dec : (c) => {

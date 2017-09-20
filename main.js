@@ -63,21 +63,21 @@ $(document).ready(function(){
                     }
                     break;
                 case 'Vigenere-XOR':
-                    // $('#info_change')[0].innerText = "偏移位置";
-                    document.querySelectorAll('input.key_input')[0].setAttribute("placeholder", "格式与密文格式保持一致");
+                    $('#info_change')[0].innerText = "输入密钥";
+                    document.querySelectorAll('input.key_input')[0].setAttribute("placeholder", "与密文十六进制格式一致");
                     if ( document.getElementById('vige_bruteforce') == null ) {
                         $('div#panel_center>div.button-component').prepend(
                             `<button id="vige_bruteforce" class="btn btn-warning" type="button"> 暴力破解 <span class="glyphicon glyphicon-arrow-left"></span></button>
                             <br><br>`
                         );
-                        // $('#caser_bruteforce').click(() => {
-                        //     c_check('Vigenere-XOR', 26);
-                        // });
+                        $('#vige_bruteforce').click(() => {
+                            c_check('vige_bruteforce', 1);
+                        });
                     }
                     break;
                 case 'Vigenere-mod26':
                     //$('#info_change')[0].innerText = "偏移位置";
-                    document.querySelectorAll('input.key_input')[0].setAttribute("placeholder", "格式与密文格式保持一致");
+                    document.querySelectorAll('input.key_input')[0].setAttribute("placeholder", "与密文十六进制格式一致");
                     if ( document.getElementById('vige_bruteforce') == null ) {
                         $('div#panel_center>div.button-component').prepend(
                             `<button id="vige_bruteforce" class="btn btn-warning" type="button"> 暴力破解 <span class="glyphicon glyphicon-arrow-left"></span></button>
@@ -193,7 +193,8 @@ $(document).ready(function(){
                     $('#plaintext').val( Caser.bruteForce( c, Number(tmp) ) );
                     break;
                 case 'vige_bruteforce':
-                    // 暴力破解按钮的特殊调整
+                    $('#plaintext').val( Vigenere.bruteForce( c, 1 ) );
+                    // 暴力破解按钮的特殊调整，如key长度的限制等
             }
         }else {
             alert("请检查数据是否输入完全");
