@@ -76,8 +76,8 @@ $(document).ready(function(){
                     }
                     break;
                 case 'Vigenere-mod26':
-                    $('#info_change')[0].innerText = "偏移位置";
-                    $('input.key_input')[0].attr("placeholder", "输入格式与密文格式说明部分保持一致");
+                    //$('#info_change')[0].innerText = "偏移位置";
+                    document.querySelectorAll('input.key_input')[0].setAttribute("placeholder", "格式与密文格式保持一致");
                     if ( document.getElementById('vige_bruteforce') == null ) {
                         $('div#panel_center>div.button-component').prepend(
                             `<button id="vige_bruteforce" class="btn btn-warning" type="button"> 暴力破解 <span class="glyphicon glyphicon-arrow-left"></span></button>
@@ -154,7 +154,7 @@ $(document).ready(function(){
     }
 
     (function() {
-        
+
         let [ classical_c, one_way_c, modern_c, common_c ] = [ ...document.querySelectorAll('#ciphertext') ];
         let [ classical_key, modern_key ] = [ ...document.querySelectorAll('input.key_input') ];
 

@@ -19,8 +19,8 @@ const encrypt_call = {
     'Vigenere-XOR' : (p, k) => {
         return Vigenere.Enc_XOR(p, k);
     },
-    'Vigenere-mod26' : (p, offset) => {
-        return Vigenere.Enc_mod(p, offset);
+    'Vigenere-mod26' : ( p, k ) => {
+        return Vigenere.Enc_mod( p, k );
     },
     'Fence' : (p, k) => {
         // Fence Encryption code here
@@ -100,6 +100,9 @@ const decrypt_call = {
     },
     'Vigenere-XOR' : (c, k) => {
         return Vigenere.Dec_XOR( c, k );
+    },
+    'Vigenere-mod26' : ( p, k ) => {
+        return Vigenere.Enc_mod( p, k );
     },
     'Fence' : (p, k) => {
         // Fence Encryption code here
@@ -204,6 +207,7 @@ function scripts_call(way, plaintext, key, ciphertext, type, enc_dec) {
                 if (way !== '---') {
                     if (ciphertext !== "") {
                         if (key !== "") {
+                            console.log(way,ciphertext, key);
                             plaintext.value = decrypt_call[way](ciphertext, key);
                         }else {
                             let offset = Number($('input.key_input')[0].value);
@@ -223,17 +227,17 @@ function scripts_call(way, plaintext, key, ciphertext, type, enc_dec) {
                     alert("请选择加密方式");
                 }
                 break;
-            case 'one-way-dec':
-                if (way !== '---') {
-                    if (ciphertext !== "") {
-                        plaintext.value = decrypt_call[way](ciphertext);
-                    }else {
-                        alert("请输入明文信息");
-                    }
-                }else {
-                    alert("请选择加密方式");
-                }
-                break;
+            // case 'one-way-dec':
+            //     if (way !== '---') {
+            //         if (ciphertext !== "") {
+            //             plaintext.value = decrypt_call[way](ciphertext);
+            //         }else {
+            //             alert("请输入明文信息");
+            //         }
+            //     }else {
+            //         alert("请选择加密方式");
+            //     }
+            //     break;
             case 'modern-dec':
                 if (way !== '---') {
                     if (plaintext !== "") {

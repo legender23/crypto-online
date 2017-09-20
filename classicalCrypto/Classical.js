@@ -82,9 +82,9 @@ const Vigenere = {
     mod_table : () => {
         let [ table, str, len=str.length ] = [ {}, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' ];
         for ( let i=0; i < len; i++ ) {
-            table[t[i]] = t.substring(i, 26).padEnd(26, t.substr(0, i));
+            table[ str[i] ] = str.substring(i, 26).padEnd(26, str.substr(0, i));
         }
-        return table;
+        return [ str, table ];
     },
     Enc_XOR : ( p, k ) => {
         let [ len, c, k_hex, mod=k_hex.length ] = [ p.length, "", Vigenere.hex_decode(k) ];
@@ -94,11 +94,30 @@ const Vigenere = {
         }
         return c;
     },
-    Enc_mod : (p, offset) => {
-        let mod_table = Vigenere.mod_table();
+    Enc_mod : ( p, k ) => {
+        let [ [ text, mod_table ], c, p_upper, p_len=p_upper.length ] = [ Vigenere.mod_table(), "", p.toUpperCase() ];
+        let [ key_offset, key, k_len=key.length ] =  [ 0, k.toUpperCase().split(" ").join("") ];
         
+        for ( let i=0; i < p_len; i++ ) {
+            let tmp = p_upper[i];
+            if ( tmp == " " ) {
+                c += " ";
+                continue;
+            }
+            if ( tmp && ( tmp.charCodeAt() < 65 || tmp.charCodeAt() > 90 ) )
+                return null;
+            
+            c += mod_table[ key[ key_offset % k_len ] ][ text.indexOf( tmp ) ];
+            key_offset ++;
+        }
+        console.log(c);
+        return c;
+    },
+    Dec_mod : ( c, k ) => {
+        let [ [ text, mod_table ], p, c_upper, c_len=c_upper.length ] = [ Vigenere.mod_table(), "", c.toUpperCase() ];
+        let [ key_offset, key, k_len=key.length ] =  [ 0, k.toUpperCase().split(" ").join("") ];
 
-    }
+    },
     Dec_XOR : ( c, k ) => {
         let [ p, c_hex, k_hex, mod=k_hex.length, len=c_hex.length ] = [ "", Vigenere.hex_decode(c), Vigenere.hex_decode(k) ];
         for ( let i=0; i < len; i++ ) {
