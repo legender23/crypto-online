@@ -137,7 +137,8 @@ const Vigenere = {
         return p;
     },
     bruteForce : ( c, key_len ) => {
-        p = "";
+        let [ p, c_hex ] = [ "", Vigenere.hex_decode(c) ];
+        
         for ( i=0;i<256;i++ ) {
             p += Vigenere.Dec_XOR( c, (i).toString(16).padStart(0, 2) )+"   i="+i+"\n";
         }
@@ -146,7 +147,9 @@ const Vigenere = {
 }
 
 const Fence = {
-
+    Enc : ( p, offset ) => {
+        
+    },
 }
 
 const Affine = {
