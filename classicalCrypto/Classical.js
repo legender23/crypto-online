@@ -155,7 +155,8 @@ const Fence = {
         let _c_len = _c[0].length;
         for ( let i=0; i<_c_len; i++ ) {
             for ( let val of _c ) {
-                c += val[i];
+                let tmp = val[i] ? val[i] : "";
+                c += tmp;
             }
         }
         return c;
@@ -163,14 +164,14 @@ const Fence = {
     Dec : ( c, rail ) => {
         let [ _p, p, _c, len=_c.length, rail_dec=Math.round( len/rail ) ] = [ [], "", c.split(" ").join("") ];
         for ( let i=0; i<len; i+=rail_dec ) {
-            console.log( _c.substr( i, rail_dec ) );
             _p.push( _c.substr( i, rail_dec ) );
         }
         
         let _p_len = _p[0].length;
         for ( let i=0; i<_p_len; i++ ) {
             for ( let val of _p ) {
-                p += val[i];
+                let tmp = val[i] ? val[i] : "";
+                p += tmp;
             }
         }
         return p;
