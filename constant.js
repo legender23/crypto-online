@@ -1,5 +1,6 @@
 const [ oneWayCryptoPath, modernCryptoPath, commonCodePath ] = [ "./CryptoJS/rollups/", "./CryptoJS/rollups/", "./CryptoJS/components/" ];
-const classicalEnc = [ 'Caser-mod26', 'Caser-mod95', 'Vigenere-XOR', 'Vigenere-mod26', 'Fence', 'Affine',  ];
+const classicalEnc = [ 'Caser-mod26', 'Caser-mod95', 'Vigenere-XOR', 'Vigenere-mod26', 'Fence' ];
+// , 'Affine'
 const modernEnc = [ 'Rabbit', 'RC4', 'AES', 'TripleDes' ];
 // 'ripemd160', 'mode-cfb', 'mode-ecb',  'mode-ofb', 'mode-ctr', 'evpkdf'
 //  'pbkdf2',
@@ -16,32 +17,32 @@ const encrypt_call = {
     'Caser-mod95' : ( p, offset, mod_bit ) => {
         return Caser.Enc( p, offset, 95 );
     },
-    'Vigenere-XOR' : (p, k) => {
-        return Vigenere.Enc_XOR(p, k);
+    'Vigenere-XOR' : ( p, k ) => {
+        return Vigenere.Enc_XOR( p, k );
     },
     'Vigenere-mod26' : ( p, k ) => {
         return Vigenere.Enc_mod( p, k );
     },
-    'Fence' : (p, k) => {
-        // Fence Encryption code here
+    'Fence' : ( p, rail ) => {
+        return Fence.Enc( p, Number(rail) );
     },
-    'Affine' : (p, k) => {
+    'Affine' : ( p, k ) => {
         // Affine Encryption code here
     },
-    'Rabbit' : (p, k) => {
-        return CryptoJS.Rabbit.encrypt(p, k).toString();
+    'Rabbit' : ( p, k ) => {
+        return CryptoJS.Rabbit.encrypt( p, k ).toString();
     },
-    'RC4' : (p, k) => {
-        return CryptoJS.RC4.encrypt(p, k).toString();
+    'RC4' : ( p, k ) => {
+        return CryptoJS.RC4.encrypt( p, k ).toString();
     },
-    'AES' : (p, k) => {
-        return CryptoJS.AES.encrypt(p, k).toString();
+    'AES' : ( p, k ) => {
+        return CryptoJS.AES.encrypt( p, k ).toString();
     },
-    'TripleDes' : (p, k) => {
-        return CryptoJS.TripleDES.encrypt(p, k).toString();
+    'TripleDes' : ( p, k ) => {
+        return CryptoJS.TripleDES.encrypt( p, k ).toString();
     },
-    'DES' : (p, k) => {
-        return CryptoJS.DES.encrypt(p, k).toString();
+    'DES' : ( p, k ) => {
+        return CryptoJS.DES.encrypt( p, k ).toString();
     },
     'SHA1' : (p) => {
         return CryptoJS.SHA1(p).toString();
@@ -62,23 +63,23 @@ const encrypt_call = {
         return CryptoJS.MD5(p).toString();
     },
     // 'pbkdf2',
-    'HmacSHA1' : (p, k) => {
-        return CryptoJS.HmacSHA1(p, k).toString();
+    'HmacSHA1' : ( p, k ) => {
+        return CryptoJS.HmacSHA1( p, k ).toString();
     },
-    'HmacSHA224' :(p, k) => {
-        return CryptoJS.HmacSHA224(p, k).toString();
+    'HmacSHA224' :( p, k ) => {
+        return CryptoJS.HmacSHA224( p, k ).toString();
     },
-    'HmacSHA256' : (p, k) => {
-        return CryptoJS.HmacSHA256(p, k).toString();
+    'HmacSHA256' : ( p, k ) => {
+        return CryptoJS.HmacSHA256( p, k ).toString();
     },
-    'HmacSHA384' : (p, k) => {
-        return CryptoJS.HmacSHA384(p, k).toString();
+    'HmacSHA384' : ( p, k ) => {
+        return CryptoJS.HmacSHA384( p, k ).toString();
     },
-    'HmacSHA512' : (p, k) => {
-        return CryptoJS.HmacSHA512(p, k).toString();
+    'HmacSHA512' : ( p, k ) => {
+        return CryptoJS.HmacSHA512( p, k ).toString();
     },
-    'HmacMD5' : (p, k) => {
-        return CryptoJS.HmacMD5(p, k).toString();
+    'HmacMD5' : ( p, k ) => {
+        return CryptoJS.HmacMD5( p, k ).toString();
     },
     'BASE64' : (p) => {
         let c = CryptoJS.enc.Utf8.parse(p);
@@ -98,32 +99,32 @@ const decrypt_call = {
     'Caser-mod95' : ( c, offset, mod_bit ) => {
         return Caser.Enc( c, offset, 95 );
     },
-    'Vigenere-XOR' : (c, k) => {
+    'Vigenere-XOR' : ( c, k ) => {
         return Vigenere.Dec_XOR( c, k );
     },
     'Vigenere-mod26' : ( c, k ) => {
         return Vigenere.Dec_mod( c, k );
     },
-    'Fence' : (p, k) => {
-        // Fence Encryption code here
+    'Fence' : ( c, rail ) => {
+        return Fence.Dec( c, Number(rail) );
     },
-    'Affine' : (p, k) => {
+    'Affine' : ( c, k ) => {
         // Affine Encryption code here
     },
-    'Rabbit' : (c, k) => {
-        return CryptoJS.Rabbit.decrypt(c, k).toString(CryptoJS.enc.Utf8);
+    'Rabbit' : ( c, k ) => {
+        return CryptoJS.Rabbit.decrypt( c, k ).toString(CryptoJS.enc.Utf8);
     },
-    'RC4' : (c, k) => {
-        return CryptoJS.RC4.decrypt(c, k).toString(CryptoJS.enc.Utf8);
+    'RC4' : ( c, k ) => {
+        return CryptoJS.RC4.decrypt( c, k ).toString(CryptoJS.enc.Utf8);
     },
-    'AES' : (c, k) => {
-        return CryptoJS.AES.decrypt(c, k).toString(CryptoJS.enc.Utf8);
+    'AES' : ( c, k ) => {
+        return CryptoJS.AES.decrypt( c, k ).toString(CryptoJS.enc.Utf8);
     },
-    'TripleDes' : (c, k) => {
-        return CryptoJS.TripleDES.decrypt(c, k).toString(CryptoJS.enc.Utf8);
+    'TripleDes' : ( c, k ) => {
+        return CryptoJS.TripleDES.decrypt( c, k ).toString(CryptoJS.enc.Utf8);
     },
-    'DES' : (c, k) => {
-        return CryptoJS.DES.decrypt(c, k).toString(CryptoJS.enc.Utf8);
+    'DES' : ( c, k ) => {
+        return CryptoJS.DES.decrypt( c, k ).toString(CryptoJS.enc.Utf8);
     },
     'BASE64' : (c) => {
         let p = CryptoJS.enc.Base64.parse(c);
