@@ -41,7 +41,6 @@ $(document).ready(function(){
                 case 'Caser-mod26':
                     $('button#vige_bruteforce').remove();
                     $('#info_change')[0].innerText = "偏移位置";
-                    //$('button#caser_bruteforce').show();
                     if ( document.getElementById('caser_bruteforce') == null ) {
                         $('div#panel_center>div.button-component').prepend(
                             `<button id="caser_bruteforce" class="btn btn-warning" type="button"> 暴力破解 <span class="glyphicon glyphicon-arrow-left"></span></button>
@@ -68,7 +67,7 @@ $(document).ready(function(){
                     break;
                 case 'Vigenere-XOR':
                     $('button#caser_bruteforce').remove();
-                    //$('button#vige_bruteforce').show();
+                    $('#info_change')[0].innerText = "输入密钥";
                     document.querySelectorAll('input.key_input')[0].setAttribute("placeholder", "与密文十六进制格式一致");
                     if ( document.getElementById('vige_bruteforce') == null ) {
                         $('div#panel_center>div.button-component').prepend( 
@@ -83,7 +82,6 @@ $(document).ready(function(){
                 case 'Vigenere-mod26':
                     $('button#caser_bruteforce').remove();
                     $('#info_change')[0].innerText = "输入密钥";
-                    //$('button#vige_bruteforce').show();
                     document.querySelectorAll('input.key_input')[0].setAttribute("placeholder", "与密文十六进制格式一致");
                     if ( document.getElementById('vige_bruteforce') == null ) {
                         $('div#panel_center>div.button-component').prepend(
@@ -97,6 +95,7 @@ $(document).ready(function(){
                     break;
                 case 'Fence':
                     $('#info_change')[0].innerText = "栏数";
+                    document.querySelectorAll('input.key_input')[0].setAttribute("placeholder", "输入数字");
                     if ( document.getElementById('caser_bruteforce') != null ) {
                         $('button#caser_bruteforce').remove();
                     }else {
@@ -193,9 +192,9 @@ $(document).ready(function(){
         let change_way = document.getElementById("crypto_way_one_way");
         change_way.addEventListener("click", () => {
             if ( change_way.value.startsWith("Hmac") ) {
-                $('div.key_choose').removeClass("key_choose_hide");
+                document.querySelectorAll('div.key_choose')[1].setAttribute("class", "key_choose");
             }else {
-                $('div.key_choose').addClass("key_choose_hide");
+                document.querySelectorAll('div.key_choose')[1].setAttribute("class", "key_choose key_choose_hide");
             }
         });
     })();
@@ -259,9 +258,9 @@ $(document).ready(function(){
     }
 
     new Init();
-    window.onresize = function() {
-        window.location.reload();
-        new Init();
-    }
+    // window.onresize = function() {
+    //     window.location.reload();
+    //     new Init();
+    // }
 
   });
