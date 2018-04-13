@@ -20,10 +20,10 @@ const Caser = {
     Enc : ( p, offset, mod_bit ) => {
 
         let [ text, _p, c ] = [ Caser.text(mod_bit), p.toUpperCase(), [] ];
-
         for ( let i of _p ) {
             if ( mod_bit == 26 && i == " ") continue;
-            let val = text[ ( text.indexOf(i) + offset ) % mod_bit ];
+	    
+            let val = text[ ( text.indexOf(i) + Number(offset) ) % mod_bit ];
             c.push(val);
         }
         return c.join("");
@@ -148,7 +148,9 @@ const Vigenere = {
 
 const Fence = {
     Enc : ( p, rail ) => {
-        let [ _c, c, _p, len=_p.length ] = [ [], "", p.split(" ").join("") ];
+	//let [ _c, c, _p, len=_p.length ] = [ [], "", p.split(" ").join("") ];
+	console.log(p);
+        let [ _c, c, _p, len=_p.length ] = [ [], "", p ];
         for ( let i=0; i<len; i+=rail ) {
             _c.push(_p.substr(i, rail));
         }
@@ -162,7 +164,8 @@ const Fence = {
         return c;
     },
     Dec : ( c, rail ) => {
-        let [ _p, p, _c, len=_c.length, rail_dec=Math.round( len/rail ) ] = [ [], "", c.split(" ").join("") ];
+        //let [ _p, p, _c, len=_c.length, rail_dec=Math.round( len/rail ) ] = [ [], "", c.split(" ").join("") ];
+        let [ _p, p, _c, len=_c.length, rail_dec=Math.round( len/rail ) ] = [ [], "", c ];
         for ( let i=0; i<len; i+=rail_dec ) {
             _p.push( _c.substr( i, rail_dec ) );
         }
